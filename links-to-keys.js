@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		Links To Keys
 // @namespace	linkstokeys
-// @version		0.01
+// @version		0.02
 // @grant		none
 // ==/UserScript==
 
@@ -41,10 +41,15 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	window.addEventListener('keypress', function(event){
-		var activeNode = document.activeElement.nodeName.toLowerCase();
+		var activeNode = document.activeElement;
 
-		if ( ( activeNode == 'input' ) || ( activeNode == 'textarea' ) )
+		if (
+			( activeNode.nodeName.toLowerCase() == 'input' ) ||
+			( activeNode.nodeName.toLowerCase() == 'textarea' ) ||
+			( activeNode.hasAttribute('contenteditable') && activeNode.getAttribute('contenteditable') == true )
+			) {
 			return true;
+		}
 
 		if ( ( event.key.toLowerCase() == 'f' ) && !event.ctrlKey ) {
 			shift = event.shiftKey;
