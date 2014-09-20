@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		Links To Keys
 // @namespace	linkstokeys
-// @version		0.03
+// @version		0.03.1
 // @grant		none
 // ==/UserScript==
 
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		if (
 			( activeNode.nodeName.toLowerCase() == 'input' ) ||
 			( activeNode.nodeName.toLowerCase() == 'textarea' ) ||
-			( activeNode.hasAttribute('contenteditable') && activeNode.getAttribute('contenteditable') == true )
+			( activeNode.hasAttribute('contenteditable') && activeNode.getAttribute('contenteditable') == 'true' )
 			) {
 			return true;
 		}
