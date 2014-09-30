@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function(){
 					// Set styles to element
 					button.style.display			= 'inline';
 					button.style.position			= 'absolute';
+					button.style.zIndex				= 999999999;
 					button.style.padding			= '2px';
 					button.style.backgroundColor	= 'yellow';
 					button.style.fontSize			= '10px';
