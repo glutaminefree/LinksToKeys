@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name		Links To Keys
 // @namespace	linkstokeys
-// @version		0.04
+// @version		0.05
 // @grant		none
 // ==/UserScript==
 
 document.addEventListener('DOMContentLoaded', function(){
-	var nums	= [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+	var nums	= [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 	var input	= false;
 	var shift	= false;
 	var ready	= false;
@@ -18,6 +18,32 @@ document.addEventListener('DOMContentLoaded', function(){
 	var link;
 	var timer;
 	var i;
+
+	function is_clickable(element) {
+		var nodeName = element.nodeName.toLowerCase();
+
+		if ( nodeName == 'a' )
+			return true;
+
+		if ( nodeName == 'textarea' )
+			return false;
+
+		if ( nodeName == 'input' ) {
+			if ( element.hasAttribute('type') ) {
+				var types	= ['text', 'password', 'email', 'number', 'search', 'tel', 'time', 'url'];
+				var type	= element.getAttribute('type');
+
+				for( x in types ) {
+					if ( type == types[x] )
+						return false;
+				}
+
+				return true;
+			} else {
+				return true;
+			}
+		}
+	}
 
 	window.addEventListener('keypress', function(event){
 		if ( ( event.key.toLowerCase() == 'f' ) && !event.ctrlKey ) {
@@ -37,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 			if ( !ready ) {
 				// Build helpers
-				links	= document.querySelectorAll('a');
+				links	= document.querySelectorAll('a, input, textarea');
 				buttons	= [];
 
 				for(i = 0; i < links.length; i++) {
@@ -83,13 +109,17 @@ document.addEventListener('DOMContentLoaded', function(){
 
 			timer = setTimeout(
 						function(){
-							var a = document.querySelector( 'a.linkstokeys-' + buffer );
+							var element = document.querySelector( '.linkstokeys-' + buffer );
 
-							if ( a ) {
-								if ( shift )
-									a.setAttribute('target', '_blank');
+							if ( element ) {
+								if ( is_clickable(element) ) {
+									if ( shift && ( element.nodeName.toLowerCase() == 'a' ) )
+										element.setAttribute('target', '_blank');
 
-								a.click();
+									element.click();
+								} else {
+									element.focus();
+								}
 
 								for(i = 0; i < buttons.length; i++) {
 									links[i].className = links[i].className.replace( ' linkstokeys-' + i, '' );
