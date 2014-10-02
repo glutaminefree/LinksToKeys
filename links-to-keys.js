@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function(){
 		if ( nodeName == 'a' )
 			return true;
 
+		if ( nodeName == 'button' )
+			return true;
+
 		if ( nodeName == 'textarea' )
 			return false;
 
@@ -63,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 			if ( !ready ) {
 				// Build helpers
-				links	= document.querySelectorAll('a, input, textarea');
+				links	= document.querySelectorAll('a, button, input, textarea');
 				buttons	= [];
 
 				for(i = 0; i < links.length; i++) {
